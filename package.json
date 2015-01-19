@@ -1,13 +1,13 @@
 {
   "name": "airdrome",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "CLI for wifi management",
-  "main": "index.js",
+  "main": "airdrome.js",
   "scripts": {
     "test": "tape test/*.js"
   },
   "bin": {
-    "airdrome": "bin/index.js"
+    "airdrome": "bin/airdrome.js"
   },
   "repository": {
     "type": "git",

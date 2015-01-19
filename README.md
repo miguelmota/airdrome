@@ -13,24 +13,41 @@ npm install airdrome -g
 ```bash
 $ airdrome --help
 
-  Usage: index [options]
+  Usage: index [options] [command]
+
+
+  Commands:
+
+    list|scan                     List available networks
+    preferred [options] [action]  List preferred networks. Or add or remove preferred network
+    connect [options] <ssid>      Connect to network
+    info                          Display current network info
+    power [options] [on|off]      Turn wifi on or off
+    disconnect                    Disconnect from current network (may require root)
+    network [options]             Display current network name
+    hardwareports                 List all hardware ports (useful for finding device interface name)
+    channel [channel]             Change channel of current network (may require root)
 
   Options:
 
-    -h, --help                                               output usage information
-    -V, --version                                            output the version number
-    scan, list                                               List available networks
-    preferred                                                List preferred networks
-    preferred add <network name> <security type> [password]  Add preferred network
-    preferred remove <network name>                          Remove preferred network
-    connect <ssid> [password]                                Connect to network
-    info                                                     Display current network info
-    power [on|off]                                           Turn wifi on or off
-    disconnect                                               Disconnect from current network (may require root)
-    channel [channel]                                        Change channel of current network (may require root)
-    network                                                  Display current network name
-    hardwareports                                            List all hardware ports (useful for finding device interface name)
-    --device [device]                                        Change the device interfaces (default is en0)
+    -h, --help     output usage information
+    -V, --version  output the version number
+```
+
+More help for a command:
+
+```
+$ airdrome connect --help
+
+  Usage: connect [options] <ssid>
+
+  Connect to network
+
+  Options:
+
+    -h, --help                 output usage information
+    -d, --device [device]      Device interface to use (default is en0)
+    -p, --password [password]  Network Password
 ```
 
 # License
