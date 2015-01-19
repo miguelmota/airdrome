@@ -22,7 +22,7 @@ program
   .option('channel [channel]', 'Change channel of current network (may require root)')
   .option('network', 'Display current network name')
   .option('hardwareports', 'List all hardware ports (useful for finding device interface name)')
-  .option('--device [device]', 'Change the device interfaces (default is en0)')
+  .option('--device [device]', 'Change the device interface (default is en0)')
   .parse(process.argv);
 
 if (program.rawArgs.length <= 2) {
