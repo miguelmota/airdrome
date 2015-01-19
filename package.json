@@ -1,7 +1,7 @@
 {
   "name": "airdrome",
   "version": "0.0.1",
-  "description": "CLI for Wifi management",
+  "description": "CLI for wifi management",
   "main": "index.js",
   "scripts": {
     "test": "tape test/*.js"

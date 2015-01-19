@@ -1,6 +1,6 @@
 # Airdrome
 
-CLI for Wi-Fi management. Basically a wrapper for `airport` and `networksetup` on Mac OS X.
+CLI for wifi management. Basically a wrapper for `airport` and `networksetup` on Mac OS X.
 
 # Install
 
@@ -30,6 +30,7 @@ $ airdrome --help
     channel [channel]                                        Change channel of current network (may require root)
     network                                                  Display current network name
     hardwareports                                            List all hardware ports (useful for finding device interface name)
+    --device [device]                                        Change the device interfaces (default is en0)
 ```
 
 # License

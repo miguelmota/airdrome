@@ -22,78 +22,74 @@ program
   .option('channel [channel]', 'Change channel of current network (may require root)')
   .option('network', 'Display current network name')
   .option('hardwareports', 'List all hardware ports (useful for finding device interface name)')
+  .option('--device [device]', 'Change the device interfaces (default is en0)')
   .parse(process.argv);
 
-if (program.list) {
-  console.log('This may take a few seconds...\n');
-  child = spawn(airportBin,
-    ['scan']); // -s also works
-}
+if (program.rawArgs.length <= 2) {
+  program.outputHelp();
+} else {
 
-if (program.info) {
-  child = spawn(airportBin,
-    ['--getinfo']); // -I also works
-}
+  if (program.device) {
+    device = program.device;
+  }
 
-if (program.connect) {
-  var ssid = program.connect;
-  var password = program.args[0];
-  console.log('This may take a few seconds...\n');
-  child = spawn(networkSetupBin,
-    ['-setairportnetwork', device, ssid].concat(password||[]));
-}
-
-if (program.power) {
-  var state = program.power;
-  child = spawn(networkSetupBin,
-    ['-setairportpower', device, state]);
-}
-
-if (program.hardwareports) {
-  child = spawn(networkSetupBin,
-    ['-listallhardwareports']);
-}
-
-if (program.network) {
-  child = spawn(networkSetupBin,
-    ['-getairportnetwork', device]);
-}
-
-if (program.disconnect) {
-  child = spawn(airportBin,
-    ['--disassociate']); // -z also works
-}
-
-if (program.channel) {
-  var channel = program.channel;
-  child = spawn(airportBin,
-    ['--channel'.concat(channel ? '=' + channel : '')]); // -c also works
-}
-
-if (program.preferred) {
-  if (program.add) {
-    var network = program.add;
-    var securityType = program.args[0];
-    var password = program.args[1];
-    var index = 0;
+  if (program.list) {
+    console.log('This may take a few seconds...\n');
+    child = spawn(airportBin,
+      ['scan']); // -s also works
+  } else if (program.info) {
+    child = spawn(airportBin,
+      ['--getinfo']); // -I also works
+  } else if (program.connect) {
+    var ssid = program.connect;
+    var password = program.args[0];
+    console.log('This may take a few seconds...\n');
     child = spawn(networkSetupBin,
-      ['-addpreferredwirelessnetworkatindex', device, network, index, securityType].concat(password||[]));
-  } else if (program.remove) {
-    var network = program.remove;
-    if (network === 'all') {
+      ['-setairportnetwork', device, ssid].concat(password||[]));
+  } else if (program.power) {
+    var state = program.power;
+    child = spawn(networkSetupBin,
+      ['-setairportpower', device, state]);
+  } else if (program.hardwareports) {
+    child = spawn(networkSetupBin,
+      ['-listallhardwareports']);
+  } else if (program.network) {
+    child = spawn(networkSetupBin,
+      ['-getairportnetwork', device]);
+  } else if (program.disconnect) {
+    child = spawn(airportBin,
+      ['--disassociate']); // -z also works
+  } else if (program.channel) {
+    var channel = program.channel;
+    child = spawn(airportBin,
+      ['--channel'.concat(channel ? '=' + channel : '')]); // -c also works
+  } else if (program.preferred) {
+    if (program.add) {
+      var network = program.add;
+      var securityType = program.args[0];
+      var password = program.args[1];
+      var index = 0;
       child = spawn(networkSetupBin,
-        ['-removeallpreferredwirelessnetworks', device]);
+        ['-addpreferredwirelessnetworkatindex', device, network, index, securityType].concat(password||[]));
+    } else if (program.remove) {
+      var network = program.remove;
+      if (network === 'all') {
+        child = spawn(networkSetupBin,
+          ['-removeallpreferredwirelessnetworks', device]);
+      } else {
+        child = spawn(networkSetupBin,
+          ['-removepreferredwirelessnetwork', device, network]);
+      }
     } else {
       child = spawn(networkSetupBin,
-        ['-removepreferredwirelessnetwork', device, network]);
+        ['-listpreferredwirelessnetworks', device]);
     }
   } else {
-    child = spawn(networkSetupBin,
-      ['-listpreferredwirelessnetworks', device]);
+    program.outputHelp();
   }
 }
 
-if (program.rawArgs.length > 2) {
+if (child) {
   child.stdout.pipe(process.stdout);
   child.stderr.pipe(process.stderr);
 }
